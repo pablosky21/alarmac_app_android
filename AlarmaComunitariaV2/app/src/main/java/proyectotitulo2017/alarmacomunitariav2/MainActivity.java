@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -45,6 +46,16 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+    }
+
+    public void alarma(View view) {
+        launchActivity();
+    }
+
+    private void launchActivity() {
+        Intent intent = new Intent(this,  MensajesActivity.class );
+        startActivity(intent);
     }
 
     public void ambulancia(View view)
@@ -100,7 +111,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -111,9 +122,9 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }
-
-        return super.onOptionsItemSelected(item);
-    }
+    */
+    //   return super.onOptionsItemSelected(item);
+    //}
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
