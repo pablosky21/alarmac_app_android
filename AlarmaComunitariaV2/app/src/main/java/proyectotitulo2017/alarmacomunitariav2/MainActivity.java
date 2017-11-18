@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void alarma(View view) {
+        
         launchActivity();
     }
 
