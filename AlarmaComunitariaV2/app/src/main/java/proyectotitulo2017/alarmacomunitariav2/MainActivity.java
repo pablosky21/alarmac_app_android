@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity
 
     private ImageButton alarma;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
     }
 
     public void alarma(View view) {
@@ -59,10 +61,7 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-
-
-
-    public void ambulancia(View view)
+      public void ambulancia(View view)
     {
         String number = "131";
         Intent intent = new Intent(Intent.ACTION_CALL);
@@ -140,10 +139,11 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(MainActivity.this, MainActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_gallery) {
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            Intent intent = new Intent(MainActivity.this, AdministrarComunidadActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_slideshow) {
-
+            Intent intent = new Intent(MainActivity.this, ReportesActivity.class);
+            startActivity(intent);
         }/* else if (id == R.id.nav_manage) {
 
         }/* else if (id == R.id.nav_share) {

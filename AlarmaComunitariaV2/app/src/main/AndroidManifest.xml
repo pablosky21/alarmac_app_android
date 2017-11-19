@@ -32,7 +32,10 @@
         <activity
             android:name=".MensajeActivity"
             android:label="@string/title_activity_mensaje"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AdministrarComunidadActivity" />
+        <activity android:name=".ReportesActivity" />
+        <activity android:name=".RegistroActivity"></activity>
     </application>
 
 </manifest>
