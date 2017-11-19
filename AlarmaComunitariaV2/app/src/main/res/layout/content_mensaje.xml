@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- ARREGLAR DISEÑO -->
     <Button
         android:id="@+id/btnAlerta"
         android:layout_width="352dp"

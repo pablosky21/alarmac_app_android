@@ -18,9 +18,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private ImageButton alarma;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +53,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void alarma(View view) {
-        
-        launchActivity();
-    }
 
-    private void launchActivity() {
-        Intent intent = new Intent(this,  MensajesActivity.class );
+        alarma =(ImageButton) findViewById(R.id.alarma);
+        Intent intent = new Intent(MainActivity.this, MensajeActivity.class);
         startActivity(intent);
     }
+
+
+
 
     public void ambulancia(View view)
     {
@@ -134,9 +137,11 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            Intent intent = new Intent(MainActivity.this, MainActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_gallery) {
-
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_slideshow) {
 
         }/* else if (id == R.id.nav_manage) {
