@@ -1,93 +1,88 @@
 package proyectotitulo2017.alarmacomunitariav2;
 
 
+import android.app.AlertDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+import android.os.AsyncTask;
+import org.json.JSONException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
+import android.util.Log;
 
-public class LoginActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
 
+        final EditText etAge = (EditText) findViewById(R.id.etAge);
+        final EditText etName = (EditText) findViewById(R.id.etName);
         final EditText etUsername = (EditText) findViewById(R.id.etUsername);
         final EditText etPassword = (EditText) findViewById(R.id.etPassword);
-        final TextView tvRegisterLink = (TextView) findViewById(R.id.tvRegisterLink);
-        final Button bLogin = (Button) findViewById(R.id.bSignIn);
+        final Button bRegister = (Button) findViewById(R.id.bRegister);
 
-        tvRegisterLink.setOnClickListener(new View.OnClickListener() {
+        bRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
-                LoginActivity.this.startActivity(registerIntent);
-            }
-        });
-
-        bLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                final String name = etName.getText().toString();
                 final String username = etUsername.getText().toString();
+                final int age = Integer.parseInt(etAge.getText().toString());
                 final String password = etPassword.getText().toString();
 
-                TareaWSLoguear tarea = new TareaWSLoguear();
+                TareaWSInsertar tarea = new TareaWSInsertar();
                 tarea.execute(
                         username,
-                        password);
-                // Response received from the server
-        /*        Response.Listener<String> responseListener = new Response.Listener<String>() {
+                        password,name);
+
+          /*      Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
-
                             if (success) {
-                                String name = jsonResponse.getString("name");
-                                int age = jsonResponse.getInt("age");
-
-                                Intent intent = new Intent(LoginActivity.this, UserAreaActivity.class);
-                                intent.putExtra("name", name);
-                                intent.putExtra("age", age);
-                                intent.putExtra("username", username);
-                                LoginActivity.this.startActivity(intent);
+                                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                RegisterActivity.this.startActivity(intent);
                             } else {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                                builder.setMessage("Login Failed")
+                                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                                builder.setMessage("Register Failed")
                                         .setNegativeButton("Retry", null)
                                         .create()
                                         .show();
                             }
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
-                };
+                };*/
 
-                LoginRequest loginRequest = new LoginRequest(username, password, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
-                queue.add(loginRequest);*/
+              /*  RegisterRequest registerRequest = new RegisterRequest(name, username, age, password, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
+                queue.add(registerRequest);*/
             }
         });
     }
 
-
     //Tarea Asíncrona para llamar al WS de inserción en segundo plano
-    private class TareaWSLoguear extends AsyncTask<String,Integer,Boolean> {
+    private class TareaWSInsertar extends AsyncTask<String,Integer,Boolean> {
 
         protected Boolean doInBackground(String... params) {
 
@@ -95,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
 
             HttpClient httpClient = new DefaultHttpClient();
 
-            HttpPost post = new HttpPost("http://10.0.2.2:8081/swagger-liberty/rest/usuarios/loguearUsuarios");
+            HttpPost post = new HttpPost("http://10.0.2.2:8081/swagger-liberty/rest/usuarios/registrarUsuarios");
             post.setHeader("content-type", "application/json");
 
             try
@@ -104,8 +99,9 @@ public class LoginActivity extends AppCompatActivity {
                 JSONObject dato = new JSONObject();
 
                 //dato.put("Id", Integer.parseInt(txtId.getText().toString()));
-                dato.put("alarm_usuario", params[0]);
-                dato.put("alarm_password", params[1]);
+                dato.put("alarm_nombre", params[0]);
+                dato.put("alarm_edad", Integer.parseInt(params[1]));
+                dato.put("alarm_correo", params[2]);
 
 
                 StringEntity entity = new StringEntity(dato.toString());
@@ -113,16 +109,10 @@ public class LoginActivity extends AppCompatActivity {
 
                 HttpResponse resp = httpClient.execute(post);
                 String respStr = EntityUtils.toString(resp.getEntity());
-                JSONObject jsonResponse = new JSONObject(respStr);
+
                 if(resp.getStatusLine().getStatusCode()==200){
-
-                    String name = jsonResponse.getString("alarm_correo");
-                    int age = jsonResponse.getInt("alarmIdUser");
-
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    intent.putExtra("name", name);
-                    intent.putExtra("age", age);
-                    LoginActivity.this.startActivity(intent);
+                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    RegisterActivity.this.startActivity(intent);
                 }
                 /*if(!respStr.equals("true"))
                     resul = false;*/
@@ -137,8 +127,18 @@ public class LoginActivity extends AppCompatActivity {
             return resul;
         }
 
+        protected void onPostExecute(Boolean result) {
 
-
-
+            if (result)
+            {
+                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                builder.setMessage("Register Failed")
+                        .setNegativeButton("Retry", null)
+                        .create()
+                        .show();
+                //lblResultado.setText("Insertado OK.");
+            }
+        }
     }
+
 }
