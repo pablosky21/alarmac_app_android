@@ -34,7 +34,8 @@
         <activity android:name=".ReportesActivity" />
         <activity android:name=".RegistroActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".MensajeActivity"></activity>
+        <activity android:name=".MensajeActivity" />
+        <activity android:name=".GrabarVozActivity"></activity>
     </application>
 
 </manifest>

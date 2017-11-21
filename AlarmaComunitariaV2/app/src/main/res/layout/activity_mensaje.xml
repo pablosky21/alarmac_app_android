@@ -6,28 +6,31 @@
     android:layout_height="match_parent"
     tools:context="proyectotitulo2017.alarmacomunitariav2.MensajeActivity">
 
-
-    <GridLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="383dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <Button
-            android:id="@+id/LLAMA"
-            android:layout_width="190dp"
+            android:id="@+id/btnGrabadorVoz"
+            android:layout_width="match_parent"
             android:layout_height="190dp"
-            android:background="@android:color/background_light"
-            android:text="LLAMA"
-            android:scaleType="fitCenter"
-             />
-
-        <Button
-            android:id="@+id/LLAMA2"
-            android:layout_width="190dp"
-            android:layout_height="190dp"
+            android:layout_marginTop="50dp"
             android:background="@android:color/holo_red_dark"
-            android:text="LLAMA2"
+            android:onClick="onClickScreenMsgVoz"
             android:scaleType="centerCrop"
-             />
-    </GridLayout>
+            android:text="Mensaje de voz" />
+
+        <Button
+            android:id="@+id/idMensaje"
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+            android:layout_marginTop="50dp"
+            android:background="@android:color/holo_green_dark"
+            android:onClick="onclickMsgAlerta"
+            android:scaleType="fitCenter"
+            android:text="Mensaje de Alerta" />
+    </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>
